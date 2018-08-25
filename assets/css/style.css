@@ -1,0 +1,25 @@
+.bg { 
+    /* The image used */
+    background-image: url("../../assets/images/background.png");
+
+    /* Full height */
+    height: 100%; 
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.jedis {
+    height:100px;
+    width:100px;
+ /*   background-color:red;
+    border: 20px solid grey;¨
+    */
+}
+.button-white{
+    background:white;
+}
+.button-red{
+    background:red;
+}
