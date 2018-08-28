@@ -5,19 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-   <!-- Added link to the jQuery Library -->
+ 
+    <!-- Added link to the jQuery Library -->
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 
 
-    <title>Document</title>
+    <title>Star Wars RPG</title>
 </head>
 <body class="bg">
   
     <div class="container">
+        <div class="row">
+                <div class="col-lg-8">
+                        
+                </div>
+                <div class="col-lg-4" id="game-title">
+                        <h1>Star Wars RPG!</h1>
+                </div>
+                                    
+        </div>
+        <div class="row">
+                <div class="col-lg-8" id="character-text">
+                        
+                </div>
+                <div class="col-lg-4">
+
+                </div>
+                                    
+        </div>
         <div class="row">
             <div class="col-lg-2" id="jedi-1">
 1
@@ -33,6 +53,15 @@
             </div>
          
         </div>
+        <div class="row">
+                <div class="col-lg-8" id="enemies-text">
+                        
+                </div>
+                <div class="col-lg-4">
+
+                </div>
+                                    
+        </div>
         <div class="row" id="enemies">
                 <div class="col-lg-2" id="enemy-1">
                         1
@@ -44,50 +73,87 @@
                         3
                  </div>            
         </div>
+        <div class="row">
+                <div class="col-lg-4">
+                        <button type="button" class="btn btn-default"  id="attack-button">Attack</button>
+                        
+                </div>
+          </div>
+        <div class="row">
+                <div class="col-lg-8" id="defender-text">
+                        
+                </div>
+                <div class="col-lg-4">
+
+                </div>
+                                    
+        </div>
+        <div class="row">
+                <div class="col-lg-2" id="enemy-1">
+
+                    </div>           
+        </div>
     </div>
 
 </body>
 <script type="text/javascript">
+    var screenjedis={  //an object to fill the screen with the figthers in different positions
+      br:'<button class="button-red" ',
+      bw:'<button class="button-white" ',
+     // j1:'<button class="button-red" id="vader-b" > <img class="jedis" src="assets/images/darkVader.jpg"></button>',
+     j1:'id="vader-b" >  <h5> Darth Vader </h5> <img class="jedis" src="assets/images/darkVader.jpg"></button>',
+     j2:'id="maul-b" > <h5> Darth Maul </h5> <img class="jedis" src="assets/images/darth-maul.jpg"><br>100</button>',
+      j3:'id="sith-b" > <h5> Darth Sith </h5> <img class="jedis" src="assets/images/darth-sith.jpg">  </button>',
+      j4:'id="obi-b" > <h5> Obi Wan Kenobi </h5> <img class="jedis" src="assets/images/obi.jpg"></button>',
     
-     var j1='<button class="button-red"  onclick="myFunction()" id="vader-b" > <img class="jedis" src="assets/images/darkVader.jpg"></button>';
-     var j2='<button  id="sith-b" > <img class="jedis" src="assets/images/darth-maul.jpg"></button>';
-     var j3='<button  id="maul-b" > <img class="jedis" src="assets/images/darth-sith.jpg"></button>';
-     var j4='<button  id="obi-b" > <img class="jedis" src="assets/images/obi.jpg"></button>';
-    
-    function sortJedis(v1,v2,v3,v4){
+        sortJedis:function (v1,v2,v3,v4){
 
-        $("#jedi-1").html(v1);
-        $("#jedi-2").html(v2);
-        $("#jedi-3").html(v3);
-        $("#jedi-4").html(v4);
-    }
-    function sortEnemies(v1,v2,v3,v4){
+          $("#jedi-1").html(v1);
+          $("#jedi-2").html(v2);
+          $("#jedi-3").html(v3);
+            $("#jedi-4").html(v4);
+        },
+         sortEnemies:function (v1,v2,v3,v4){
 
-        $("#enemy-1").html(v1);
-        $("#enemy-2").html(v2);
-        $("#enemy-3").html(v3);
-    }
+              $("#enemy-1").html(v1);
+               $("#enemy-2").html(v2);
+               $("#enemy-3").html(v3);
+         },
+         init:function (){
+              this.sortJedis(this.bw+this.j1,this.bw+this.j2,this.bw+this.j3,this.bw+this.j4);
+              this.sortEnemies("","","","");     
+              $("#character-text").html("<h2>Your Character</h2>");
+              $("#enemies-text").html("<h2>Enemies Available to Attack</h2>");
+              $("#defender-text").html("<h2>Defender</h2>");
+              
+          }
+    };
+    var game={  //an object to save the data of the actual game
+        stage:0, // this variable stores in which stage of the game we are;
+        jediPower:0,  // this variable stores the power level of the jedi
+        enemyPowder:0,  // this variable stores the power level of the enemy
+
+    };
+    var characters={
+
+    };
     $("#jedi-1").on("click",function(){
-        sortJedis(j1,"","","");
-        sortEnemies(j2,j3,j4,);
+        screenjedis.sortJedis(screenjedis.bw+screenjedis.j1,"","","");
+        screenjedis.sortEnemies(screenjedis.br+screenjedis.j2,screenjedis.br+screenjedis.j3,screenjedis.br+screenjedis.j4,);
     });
     $("#jedi-2").on("click",function(){
-        sortJedis(j2,"","","");
-        sortEnemies(j1,j3,j4,);
+        screenjedis.sortJedis(screenjedis.bw+screenjedis.j2,"","","");
+        screenjedis.sortEnemies(screenjedis.br+screenjedis.j1,screenjedis.br+screenjedis.j3,screenjedis.br+screenjedis.j4,);
     });
     $("#jedi-3").on("click",function(){
-        sortJedis(j3,"","","");
-        sortEnemies(j1,j2,j4,);
+        screenjedis.sortJedis(screenjedis.bw+screenjedis.j3,"","","");
+        screenjedis.sortEnemies(screenjedis.br+screenjedis.j1,screenjedis.br+screenjedis.j2,screenjedis.br+screenjedis.j4,);
     });
     $("#jedi-4").on("click",function(){
-        sortJedis(j4,"","","");
-        sortEnemies(j1,j2,j3,);
+        screenjedis.sortJedis(screenjedis.bw+screenjedis.j4,"","","");
+        screenjedis.sortEnemies(screenjedis.br+screenjedis.j1,screenjedis.br+screenjedis.j2,screenjedis.br+screenjedis.j3,);
     });
-    function init(){
-     sortJedis(j1,j2,j3,j4);
-     sortEnemies("","","","");     
-    }
-    init();
+    screenjedis.init();
 
 </script>
 
