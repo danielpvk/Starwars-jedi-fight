@@ -53,6 +53,7 @@
               $("#character-text").html("<h2>Your Character</h2>");
               $("#enemies-text").html("<h2>Enemies Available to Attack</h2>");
               $("#defender-text").html("<h2>Defender</h2>");
+              $("#continue-text").html("");
               game.stage=0;
           }
     };
@@ -115,7 +116,6 @@
        
 
         },
-      //  chooseEnemy: function(e){
         chooseEnemy: function(j){
             if (this.stage==1){
                 switch (possibleEnemies[j]){
@@ -164,12 +164,13 @@
                 scr.sortJedis(game.player1,game.player1Power,"","","","","","");
                  $("#attack-result").html("<p>You attacked for a "+this.player1NewAttack+" damage</p>");
                 $("#attack-result").append("<p>And you defeated your enemy, YOU WIN!!</p>");
-
+                game.stage=3;
             }
             else {
                 $("#attack-result").html("<p>You where hitted back for a "+this.player2CounterAttack+" damage</p>");
                 $("#attack-result").append("<p>And you were killed, YOU LOOSE!!</p>");
-
+                $("#continue-text").html('<button class="btn-danger btn-lg" id="continue-b" >  <h5> YOU LOOSE! </h5> PRESS TO PLAY AGAIN</button>');
+                game.stage=10; //the stage 10 is the stage where continue button is activated
             }
         }
 
@@ -210,6 +211,11 @@
         debugger;
         game.attack();
     });
-
+    $("#continue-text").on("click",function(){
+        if (game.stage=10){
+            scr.init();//the stage 10 is the stage where continue button is activated
+            //this is to avoid that a continue button div is click in other stage
+        }
+    });
     scr.init();
 
