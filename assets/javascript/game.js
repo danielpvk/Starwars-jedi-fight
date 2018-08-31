@@ -153,12 +153,25 @@
             this.player2Power=this.player2Power-this.player1NewAttack;
             this.player1NewAttack=this.player1NewAttack+this.player1Attack;
             this.player1Power=this.player1Power-this.player2CounterAttack;
-            $("#attack-result").html("<p>You attacked for a "+this.player1NewAttack+" damage</p>");
-            $("#attack-result").append("<p>You where hitted back for a "+this.player2CounterAttack+" damage</p>");
-            scr.sortJedis(game.player1,game.player1Power,"","","","","","");
-            scr.sortDefender(game.player2,game.player2Power);
+            if ((this.player1Power>0)&&(this.player2Power>0))
+            {    $("#attack-result").html("<p>You attacked for a "+this.player1NewAttack+" damage</p>");
+                $("#attack-result").append("<p>You where hitted back for a "+this.player2CounterAttack+" damage</p>");
+                scr.sortJedis(game.player1,game.player1Power,"","","","","","");
+                scr.sortDefender(game.player2,game.player2Power);
+            }
+            else if (this.player1Power>0)
+            {
+                scr.sortJedis(game.player1,game.player1Power,"","","","","","");
+                 $("#attack-result").html("<p>You attacked for a "+this.player1NewAttack+" damage</p>");
+                $("#attack-result").append("<p>And you defeated your enemy, YOU WIN!!</p>");
+
+            }
+            else {
+                $("#attack-result").html("<p>You where hitted back for a "+this.player2CounterAttack+" damage</p>");
+                $("#attack-result").append("<p>And you were killed, YOU LOOSE!!</p>");
+
+            }
         }
-        //}
 
     };
   
