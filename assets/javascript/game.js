@@ -43,6 +43,7 @@
                else {$("#enemy-3").html("");}               
                
          },
+         
       sortDefender:function (d1,p1){
              $("#defender-1").html(this.br+d1+p1+this.be);
          },
@@ -82,28 +83,28 @@
                 case 0:{
                     scr.sortJedis(scr.j1,scr.jedis[0][0],"","","","","",""); 
                     scr.sortEnemies(scr.j2,scr.jedis[0][1],scr.j3,scr.jedis[0][2],scr.j4,scr.jedis[0][3]);
-                      possibleEnemies=[1,2,3];
+                      this.possibleEnemies=[1,2,3];
                       game.player1=scr.j1;
                     break;
                     }
                 case 1:{
                     scr.sortJedis(scr.j2,scr.jedis[0][1],"","","","","","");
                     scr.sortEnemies(scr.j1,scr.jedis[0][0],scr.j3,scr.jedis[0][2],scr.j4,scr.jedis[0][3]);
-                    possibleEnemies=[0,2,3];
+                    this.possibleEnemies=[0,2,3];
                     game.player1=scr.j2;
                     break;
                 }
                 case 2:{
                     scr.sortJedis(scr.j3,scr.jedis[0][2],"","","","","");
                     scr.sortEnemies(scr.j1,scr.jedis[0][0],scr.j2,scr.jedis[0][1],scr.j4,scr.jedis[0][3]);
-                    possibleEnemies=[0,1,3];
+                    this.possibleEnemies=[0,1,3];
                     game.player1=scr.j3;
                     break;
                 }
                 case 3:{
                     scr.sortJedis(scr.j4,scr.jedis[0][3],"","","","","");
                    scr.sortEnemies(scr.j1,scr.jedis[0][0],scr.j2,scr.jedis[0][1],scr.j3,scr.jedis[0][2]);
-                   possibleEnemies=[0,1,2];
+                   this.possibleEnemies=[0,1,2];
                    game.player1=scr.j4;
                    break;
                 }
@@ -118,7 +119,7 @@
         },
         chooseEnemy: function(j){
             if (this.stage==1){
-                switch (possibleEnemies[j]){
+                switch (this.possibleEnemies[j]){
                     case 0: {
                         scr.sortDefender(scr.j1,scr.jedis[0][0]);
                         game.player2Index=0;
@@ -149,24 +150,56 @@
                 
             }  
         },
+        displayEnemies( ){
+           var enemies=[];
+           for (var j=0; j<this.possibleEnemies.length;j++ ){
+            switch (this.possibleEnemies[j]){
+                case 0: {
+                    enemies.push(scr.j1);
+                    enemies.push(scr.jedis[0][0]);
+                    break;
+                }
+                case 1: {
+                    enemies.push(scr.j2);
+                    enemies.push(scr.jedis[0][1]);
+                    break;
+                }
+                case 2: {
+                    enemies.push(scr.j3);
+                    enemies.push(scr.jedis[0][2]);
+                    break;
+                }
+                case 3: {
+                    enemies.push(scr.j4);
+                    enemies.push(scr.jedis[0][3]);
+                    break;
+                }
+            }
+            }
+            this.sortEnemies(enemies[0],enemies[1],enemies[2],enemies[0],enemies[1],enemies[2]); 
+        },
         attack:function(){
             this.player2Power=this.player2Power-this.player1NewAttack;
             this.player1NewAttack=this.player1NewAttack+this.player1Attack;
             this.player1Power=this.player1Power-this.player2CounterAttack;
-            if ((this.player1Power>0)&&(this.player2Power>0))
+            if ((this.player1Power>0)&&(this.player2Power>0))  // fight continues
             {    $("#attack-result").html("<p>You attacked for a "+this.player1NewAttack+" damage</p>");
                 $("#attack-result").append("<p>You where hitted back for a "+this.player2CounterAttack+" damage</p>");
                 scr.sortJedis(game.player1,game.player1Power,"","","","","","");
                 scr.sortDefender(game.player2,game.player2Power);
             }
-            else if (this.player1Power>0)
+            else if (this.player1Power>0)  //player win
             {
                 scr.sortJedis(game.player1,game.player1Power,"","","","","","");
-                 $("#attack-result").html("<p>You attacked for a "+this.player1NewAttack+" damage</p>");
+                $("#attack-result").html("<p>You attacked for a "+this.player1NewAttack+" damage</p>");
                 $("#attack-result").append("<p>And you defeated your enemy, YOU WIN!!</p>");
-                game.stage=3;
+                this.stage=3;
+                $("#continue-text").html('<button class="btn-danger btn-lg" id="continue-b" >  <h5> YOU WIN! </h5> PRESS TO PLAY AGAIN</button>');
+                debugger;   
+                this.possibleEnemies.splice(this.player2Index,1);  //removes the defeated enemy of the list of enemies to fight
+                this.displayEnemies();
             }
-            else {
+            else {  //player loose
                 $("#attack-result").html("<p>You where hitted back for a "+this.player2CounterAttack+" damage</p>");
                 $("#attack-result").append("<p>And you were killed, YOU LOOSE!!</p>");
                 $("#continue-text").html('<button class="btn-danger btn-lg" id="continue-b" >  <h5> YOU LOOSE! </h5> PRESS TO PLAY AGAIN</button>');
@@ -208,7 +241,7 @@
     
     });
     $("#attack-button").on("click",function(){
-        debugger;
+  
         game.attack();
     });
     $("#continue-text").on("click",function(){
