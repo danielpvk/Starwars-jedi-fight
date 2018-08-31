@@ -45,7 +45,9 @@
          },
          
       sortDefender:function (d1,p1){
-             $("#defender-1").html(this.br+d1+p1+this.be);
+          if (d1!=""){
+             $("#defender-1").html(this.br+d1+p1+this.be);}
+          else {$("#defender-1").html("");}
          },
 
       init:function (){
@@ -176,7 +178,8 @@
                 }
             }
             }
-            this.sortEnemies(enemies[0],enemies[1],enemies[2],enemies[0],enemies[1],enemies[2]); 
+            scr.sortEnemies(enemies[0],enemies[1],enemies[2],enemies[3],enemies[4],enemies[5]); 
+          
         },
         attack:function(){
             this.player2Power=this.player2Power-this.player1NewAttack;
@@ -197,13 +200,17 @@
                 $("#continue-text").html('<button class="btn-danger btn-lg" id="continue-b" >  <h5> YOU WIN! </h5> PRESS TO PLAY AGAIN</button>');
                 debugger;   
                 this.possibleEnemies.splice(this.player2Index,1);  //removes the defeated enemy of the list of enemies to fight
+                scr.sortEnemies("","","","","","");
                 this.displayEnemies();
+                scr.sortDefender("",""); 
+                $("#continue-text").html('');
             }
             else {  //player loose
                 $("#attack-result").html("<p>You where hitted back for a "+this.player2CounterAttack+" damage</p>");
                 $("#attack-result").append("<p>And you were killed, YOU LOOSE!!</p>");
                 $("#continue-text").html('<button class="btn-danger btn-lg" id="continue-b" >  <h5> YOU LOOSE! </h5> PRESS TO PLAY AGAIN</button>');
                 game.stage=10; //the stage 10 is the stage where continue button is activated
+                scr.sortDefender("","");
             }
         }
 
@@ -248,6 +255,7 @@
         if (game.stage=10){
             scr.init();//the stage 10 is the stage where continue button is activated
             //this is to avoid that a continue button div is click in other stage
+            $("#continue-text").html('');
         }
     });
     scr.init();
