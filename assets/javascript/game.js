@@ -33,11 +33,11 @@
                 $("#enemy-1").html(this.br+v1+p1+this.be);
                 }
                 else {$("#enemy-1").html("");}
-            if (v2!=""){  
+            if ((v2!="") && (v2!=null)){  
                 $("#enemy-2").html(this.br+v2+p2+this.be);
                  }
                else {$("#enemy-2").html("");}  
-               if (v3!=""){  
+               if ((v3!="") && (v3!=null)) {  
                 $("#enemy-3").html(this.br+v3+p3+this.be);
                  }
                else {$("#enemy-3").html("");}               
@@ -120,7 +120,7 @@
 
         },
         chooseEnemy: function(j){
-            if (this.stage==1){
+            if ((this.stage==1) || (this.stage==3)){
                 switch (this.possibleEnemies[j]){
                     case 0: {
                         scr.sortDefender(scr.j1,scr.jedis[0][0]);
@@ -148,7 +148,7 @@
                     }
                 }
                 this.fillEnemy(scr.jedis[0][j],scr.jedis[2][j]);
-                game.stage=2;    
+                game.stage++;    
                 
             }  
         },
@@ -196,7 +196,7 @@
                 scr.sortJedis(game.player1,game.player1Power,"","","","","","");
                 $("#attack-result").html("<p>You attacked for a "+this.player1NewAttack+" damage</p>");
                 $("#attack-result").append("<p>And you defeated your enemy, YOU WIN!!</p>");
-                this.stage=3;
+                this.stage++;
                 $("#continue-text").html('<button class="btn-danger btn-lg" id="continue-b" >  <h5> YOU WIN! </h5> PRESS TO PLAY AGAIN</button>');
                 debugger;   
                 this.possibleEnemies.splice(this.player2Index,1);  //removes the defeated enemy of the list of enemies to fight
