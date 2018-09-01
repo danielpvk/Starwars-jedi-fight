@@ -9,7 +9,7 @@
       j3:'id="sith-b" > <h5> Darth Sith </h5> <img class="jedis" src="assets/images/darth-sith.jpg"><br>',
       j4:'id="obi-b" > <h5> Obi Wan Kenobi </h5> <img class="jedis" src="assets/images/obi.jpg"><br>',
       
-      sortJedis:function (v1,p1,v2,p2,v3,p3,v4,p4){
+      sortJedis:function (v1,p1,v2,p2,v3,p3,v4,p4){   //this method add the jedis to the screen
           if (v1!=""){  
           $("#jedi-1").html(this.bw+v1+p1+this.be);
           }
@@ -27,7 +27,7 @@
           }
           else {$("#jedi-4").html("")};
         },
-      sortEnemies:function (v1,p1,v2,p2,v3,p3){
+      sortEnemies:function (v1,p1,v2,p2,v3,p3){  //this method adds the enemies to the screen
 
             if (v1!=""){  
                 $("#enemy-1").html(this.br+v1+p1+this.be);
@@ -44,13 +44,13 @@
                
          },
          
-      sortDefender:function (d1,p1){
+      sortDefender:function (d1,p1){  //this method adds the defender to the screen
           if (d1!=""){
              $("#defender-1").html(this.br+d1+p1+this.be);}
           else {$("#defender-1").html("");}
          },
 
-      init:function (){
+      init:function (){  //this method clears the screen and add the jedis to play
               this.sortJedis(this.j1,this.jedis[0][0],this.j2,this.jedis[0][1],this.j3,this.jedis[0][2],this.j4,this.jedis[0][3]);
               this.sortEnemies("","","","","","","");     
               $("#character-text").html("<h2>Your Character</h2>");
@@ -63,23 +63,23 @@
     var game={  //an object to save the data of the actual game
         stage:0, // this variable stores in which stage of the game we are;
         player1Power:0,  // this variable stores the power level of the player1
-        player1NewAttack:0,// this variable stores the health of the player1
-        player1Attack:0,
-        player1:"",
-        player2Power:0,
-        player2CounterAttack:0,
-        player2:"",
-        fillPlayers: function (p,a){ //this function will do the math an fill the player caracteristics
+        player1NewAttack:0,// this variable stores the added power of the player1
+        player1Attack:0,  //this variable stores the original power of the player
+        player1:"",  //this variable stores who is the player 1
+        player2Power:0,  // this variable stores the health of player 2
+        player2CounterAttack:0,  //this variable stores the counter attack power of player 2
+        player2:"",  //this variable stores who is the player 2
+        fillPlayers: function (p,a){ //this function fill the player characteristics
             this.player1Power=p;
             this.player1Attack=a;
             this.player1NewAttack=a;
             },
-        fillEnemy: function (p,c){
+        fillEnemy: function (p,c){  //this function fill the enemy characteristics
             this.player2Power=p;
             this.player2CounterAttack=c;
         },
-        possibleEnemies:[],        
-        chooseJedi: function(j){
+        possibleEnemies:[],        //this array stores who are the enemies left
+        chooseJedi: function(j){  //this method helps us to choose the jedi
             if (this.stage==0){
             switch (j) {
                 case 0:{
@@ -119,44 +119,39 @@
        
 
         },
-        chooseEnemy: function(j){
+        chooseEnemy: function(j){  //this method helps us to choose the enemy
             debugger;
             if ((this.stage==1) || (this.stage==3) || (this.stage==5)){
                 switch (this.possibleEnemies[j]){
                     case 0: {
                         scr.sortDefender(scr.j1,scr.jedis[0][0]);
-                      //  game.player2Index=0;
                         game.player2=scr.j1;
                         break;
                     }
                     case 1: {
                         scr.sortDefender(scr.j2,scr.jedis[0][1]);
-                        //game.player2Index=1;
                         game.player2=scr.j2;
                         break;
                     }
                     case 2: {
                         scr.sortDefender(scr.j3,scr.jedis[0][2]);
-                        //game.player2Index=2;
-                        game.player2=scr.j3;
+                       game.player2=scr.j3;
                         break;
                     }
                     case 3: {
                         scr.sortDefender(scr.j4,scr.jedis[0][3]);
-                        //game.player2Index=3;
                         game.player2=scr.j4;
                         break;
                     }
                 }
                 this.fillEnemy(scr.jedis[0][this.possibleEnemies[j]],scr.jedis[2][this.possibleEnemies[j]]);
                 game.stage++;    
-                //game.possibleEnemies.splice(game.player2Index,1);
-                game.possibleEnemies.splice(j,1);
+               game.possibleEnemies.splice(j,1);
                 debugger;
                 this.displayEnemies();
             }  
         },
-        displayEnemies( ){
+        displayEnemies( ){  //this method add the enemies that are available in order to call the sort enemies method
            var enemies=[];
            for (var j=0; j<this.possibleEnemies.length;j++ ){
             switch (this.possibleEnemies[j]){
@@ -182,8 +177,9 @@
                 }
             }
             }
-            scr.sortEnemies(enemies[0],enemies[1],enemies[2],enemies[3],enemies[4],enemies[5]); 
-          
+            if (enemies.length>0) {
+                scr.sortEnemies(enemies[0],enemies[1],enemies[2],enemies[3],enemies[4],enemies[5]); 
+            }
         },
         attack:function(){
             this.player2Power=this.player2Power-this.player1NewAttack;
