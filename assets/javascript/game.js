@@ -125,32 +125,35 @@
                 switch (this.possibleEnemies[j]){
                     case 0: {
                         scr.sortDefender(scr.j1,scr.jedis[0][0]);
-                        game.player2Index=0;
+                      //  game.player2Index=0;
                         game.player2=scr.j1;
                         break;
                     }
                     case 1: {
                         scr.sortDefender(scr.j2,scr.jedis[0][1]);
-                        game.player2Index=1;
+                        //game.player2Index=1;
                         game.player2=scr.j2;
                         break;
                     }
                     case 2: {
                         scr.sortDefender(scr.j3,scr.jedis[0][2]);
-                        game.player2Index=2;
+                        //game.player2Index=2;
                         game.player2=scr.j3;
                         break;
                     }
                     case 3: {
                         scr.sortDefender(scr.j4,scr.jedis[0][3]);
-                        game.player2Index=3;
+                        //game.player2Index=3;
                         game.player2=scr.j4;
                         break;
                     }
                 }
-                this.fillEnemy(scr.jedis[0][j],scr.jedis[2][j]);
+                this.fillEnemy(scr.jedis[0][this.possibleEnemies[j]],scr.jedis[2][this.possibleEnemies[j]]);
                 game.stage++;    
-                
+                //game.possibleEnemies.splice(game.player2Index,1);
+                game.possibleEnemies.splice(j,1);
+                debugger;
+                this.displayEnemies();
             }  
         },
         displayEnemies( ){
@@ -200,7 +203,7 @@
                 this.stage++;
                 $("#continue-text").html('<button class="btn-danger btn-lg" id="continue-b" >  <h5> YOU WIN! </h5> PRESS TO PLAY AGAIN</button>');
                 debugger;   
-                this.possibleEnemies.splice(this.player2Index,1);  //removes the defeated enemy of the list of enemies to fight
+           //     this.possibleEnemies.splice(this.player2Index,1);  //removes the defeated enemy of the list of enemies to fight
                 scr.sortEnemies("","","","","","");
                 this.displayEnemies();
                 scr.sortDefender("",""); 
@@ -238,7 +241,7 @@
            }
     });
     $("#enemy-1").on("click",function(){
-     debugger;
+
         game.chooseEnemy(0);
      });
     $("#enemy-2").on("click",function(){
