@@ -120,7 +120,8 @@
 
         },
         chooseEnemy: function(j){
-            if ((this.stage==1) || (this.stage==3)){
+            debugger;
+            if ((this.stage==1) || (this.stage==3) || (this.stage==5)){
                 switch (this.possibleEnemies[j]){
                     case 0: {
                         scr.sortDefender(scr.j1,scr.jedis[0][0]);
@@ -237,7 +238,7 @@
            }
     });
     $("#enemy-1").on("click",function(){
-     
+     debugger;
         game.chooseEnemy(0);
      });
     $("#enemy-2").on("click",function(){
